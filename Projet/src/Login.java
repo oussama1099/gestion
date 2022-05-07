@@ -22,9 +22,8 @@ public class Login extends JFrame implements ActionListener{
 	String USERNAME;
 	String PASSW;
 	JCheckBox passw_afficher;
-
+//oussamateffal
 	public Login() {
-		
 		//frame
 		frame = new JFrame();
 		frame.setLayout(null);
