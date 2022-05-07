@@ -47,7 +47,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		
 		
 //		if(UserType=="Administrateur")
-		JLabel Text = new JLabel("Réseravtion des salles");
+		JLabel Text = new JLabel("RÃ©seravtion des salles");
 		Text.setFont(new Font("Segeo UI", Font.BOLD, 20));
 		Text.setForeground(new Color(57, 113, 177));
 		Text.setBounds(70, 25, 600, 30);
@@ -57,30 +57,30 @@ public class OngletReservation extends JPanel implements ActionListener {
 		reservationOnglet.setBackground(Color.white);
 		reservationOnglet.setLayout(null);
 		
-			//partie à gauche (Ajout, suppression, modification des réseravation)
+			//partie Ã  gauche (Ajout, suppression, modification des rÃ©seravation)
 		
 				JPanel leftPan1 = new JPanel();
 				leftPan1.setLayout(null);
 				leftPan1.setPreferredSize(new Dimension(400, 700));
 				leftPan1.setBackground(Color.white);
 				
-				JLabel lidReservataire=new JLabel("Nom réservataire");
+				JLabel lidReservataire=new JLabel("Nom rÃ©servataire");
 				lidReservataire.setBounds(80, 72, 200, 30);
 				IdReservataire = new JTextField();
 				IdReservataire.setBounds(80, 100, 200, 30);
 			
 				
-				JLabel NSalle=new JLabel("Numéro de salle");
+				JLabel NSalle=new JLabel("NumÃ©ro de salle");
 				NSalle.setBounds(80, 142, 200, 30);
 				N_Salle = new JTextField();
 				N_Salle.setBounds(80, 170, 200, 30);
 				
-				JLabel lDateReseravtion=new JLabel("Date de Réservation");
+				JLabel lDateReseravtion=new JLabel("Date de RÃ©servation");
 				lDateReseravtion.setBounds(80, 212, 200, 30);
 				datePanel = new JDateChooser();
 				datePanel.setBounds(80, 240, 200, 30);
 				
-				JLabel HeureD = new JLabel("Heure début");
+				JLabel HeureD = new JLabel("Heure dÃ©but");
 				HeureD.setBounds(80, 282, 200, 30);
 				Date date = new Date(0,0,0);
 				SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR);
@@ -146,7 +146,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				leftPan1.add(UpdateBtn);
 
 				
-			//partie à droite (Affichage des tableaux)
+			//partie Ã  droite (Affichage des tableaux)
 				JPanel rightPan1 = new JPanel();
 				JScrollPane tabscroll= new JScrollPane();
 				tabReservation = new JTable();
@@ -241,9 +241,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 				Select();
 	}
 
-	
-	
-
 	public void Select() {
 		// requete sql
 		
@@ -255,7 +252,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		
 		String url = "jdbc:mysql://localhost:3306/projet_java";
 		
-		//selection des données session admin
+		//selection des donnÃ©es session admin
 		if(UserType=="Administrateur") {
 		
 		try {
@@ -275,7 +272,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// selection des données session reservataire
+		// selection des donnÃ©es session reservataire
 
 	}else {
 		try {
