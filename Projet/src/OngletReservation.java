@@ -397,14 +397,14 @@ public class OngletReservation extends JPanel implements ActionListener {
 				
 				String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (TIMEDIFF(HeureD,'"+de.getFormat().format(jSpinner1.getValue())+"')<=\"00:00:00\" or TIMEDIFF(HeureF,'"+de1.getFormat().format(jSpinner2.getValue())+"')>=\"00:00:00\")" ;
 				JOptionPane.showMessageDialog(null, sql4);
-//				ResultSet res =s3.executeQuery(sql2);
-//
-//				if(res.next()) {
-//				JOptionPane.showMessageDialog(null, " la modification est impossible,veuillez changer le créneau choisi");
-				//}
-			//	else
+				ResultSet res =s3.executeQuery(sql2);
+
+				if(res.next()) {
+				JOptionPane.showMessageDialog(null, " la modification est impossible,veuillez changer le créneau choisi");
+				}
+				else
 				   s3.executeUpdate(sql4);
-			//}
+			}
 				
 				
 			
@@ -412,7 +412,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				connect3.close();
 				Select();
 				
-			}} catch (ClassNotFoundException e1) {
+			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SQLException e1) {
