@@ -24,9 +24,8 @@ public class Login extends JFrame implements ActionListener{
 	String USERNAME;
 	String PASSW;
 	JCheckBox passw_afficher;
-
+//oussamateffal
 	public Login() {
-		
 		//frame
 		frame = new JFrame();
 		frame.setLayout(null);
@@ -127,7 +126,7 @@ public class Login extends JFrame implements ActionListener{
 		panForm.add(passw_afficher);
 		panForm.add(btn);
 		
-		JLabel passw_forget = new JLabel("Mot de passe oublié?");
+		JLabel passw_forget = new JLabel("Mot de passe oubliÃ©?");
 		passw_forget.setBounds(85, 350, 200, 30);
 		panForm.add(passw_forget);
 		
