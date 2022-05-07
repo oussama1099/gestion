@@ -111,6 +111,10 @@ public class OngletReservation extends JPanel implements ActionListener {
 				UpdateBtn = new JButton("Modifier");
 				UpdateBtn.setBounds(256, 450, 100,30);
 				
+				
+	
+				
+				
 				AjoutBtn.setBackground(new Color(57, 113, 177));
 				AjoutBtn.setFont(new Font("Segeo UI", Font.PLAIN, 12));
 				AjoutBtn.setFocusable(false);
@@ -129,6 +133,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				UpdateBtn.setForeground(Color.white);
 				UpdateBtn.addActionListener(this);
 				
+				
 				leftPan1.add(lidReservataire);
 				leftPan1.add(NSalle);
 				leftPan1.add(lDateReseravtion);
@@ -139,7 +144,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				leftPan1.add(AjoutBtn);
 				leftPan1.add(DeleteBtn);
 				leftPan1.add(UpdateBtn);
-	
+
 				
 			//partie à droite (Affichage des tableaux)
 				JPanel rightPan1 = new JPanel();
@@ -234,17 +239,15 @@ public class OngletReservation extends JPanel implements ActionListener {
 				reservationOnglet.add(rightPan1);
 				reservationOnglet.add(leftPan1);
 				Select();
-		
-		
-		
 	}
 
 	
 	
 
 	public void Select() {
-		// requete SQL
-		String userid="";
+		// requete sql
+		
+		
 		String sql = "select id_reservation,Nsalle, date, HeureD,HeureF from reservation ";
 		String sql2 ="select id_reservation,N_salle, date, HeureD,HeureF from confirmation";
 		String sqlE="select N_salle,date, HeureD,HeureF from confirmation";
@@ -396,13 +399,9 @@ public class OngletReservation extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		
-			
-			
-		}
-		
-		
-	}
+
+	}}}
 	
 	
 
-}
+
