@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
 
+import com.mysql.jdbc.PreparedStatement;
+
 public class Login extends JFrame implements ActionListener{
 	
 	JFrame frame;
@@ -44,9 +46,9 @@ public class Login extends JFrame implements ActionListener{
 		lusertype.setBounds(125, 100, 200, 30);
 		userType = new JComboBox();
 		userType.setBounds(200, 100, 125, 30);
-		userType.addItem("Etudiant");
-		userType.addItem("Professeur");
-		userType.addItem("Administrateur");
+		userType.addItem("etudiant");
+		userType.addItem("professeur");
+		userType.addItem("administrateur");
 		JLabel label2 = new JLabel("Se conncter");
 		lusername = new JLabel();
 		ImageIcon userIcon = new ImageIcon("rsrc\\user-icon.png");
@@ -195,33 +197,41 @@ public class Login extends JFrame implements ActionListener{
 		frame.setVisible(true);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource()==btn) {
-			String url = "jdbc:mysql://localhost:3306/jdbs";
+			String url = "jdbc:mysql://localhost:3306/projet_java";
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connexion = DriverManager.getConnection(url, "root", "");
-					USERNAME = username.getText();
-					PASSW = passw.getText();
-					Statement stat = connexion.createStatement();
-					String sql = "select * from test where nom='"+USERNAME+"'and password='"+PASSW+"'";
-					ResultSet rs = stat.executeQuery(sql);
-					if(rs.next()) {
-						frame.dispose();
-						new Administration(null, null);
-					}else {
-						JOptionPane.showMessageDialog(null, "Nom d'utilisateur ou le mot de passe incorrecte(s)!");
-						USERNAME = "";
-						PASSW = "";
-						username.setText("Nom d'utilisateur");
-						passw.setText("***********");
-					}
+
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection connexion = DriverManager.getConnection(url, "root", "");
+				String USERTYPE = userType.getSelectedItem().toString();
+				USERNAME = username.getText();
+				PASSW = passw.getText();
+				Statement stat = connexion.createStatement();
+				String sql = "select * from "+USERTYPE+" where UserID='"+USERNAME+"'and password='"+PASSW+"'";
+				ResultSet rs = stat.executeQuery(sql);
+				if(rs.next()) {
+					frame.dispose();
+					switch(USERTYPE) {
+					case "etudiant": new reservataire(userType.getSelectedItem().toString(),USERNAME); break;
+					case "professeur": new reservataire(userType.getSelectedItem().toString(),USERNAME); break;
+					case "administrateur": new Administration(USERNAME); break;
+					
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Nom d'utilisateur ou le mot de passe incorrecte(s)!");
+				USERNAME = "";
+				PASSW = "";
+				username.setText("Nom d'utilisateur");
+				passw.setText("***********");
+	
 				
+			}
 				connexion.close();
-				
-			} catch (ClassNotFoundException e2) {
+				} catch (ClassNotFoundException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}

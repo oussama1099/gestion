@@ -40,10 +40,12 @@ public class OngletReservation extends JPanel implements ActionListener {
 	JTable tabReservation2;
 	JDateChooser datePanel2;
 	String UserType;
-	
-	public OngletReservation(String UserType) {
+	String UserID;
+
+	public OngletReservation(String UserType,String UserID) {
 		
 		this.UserType=UserType;
+		this.UserID=UserID;
 		
 		
 //		if(UserType=="Administrateur")
@@ -64,7 +66,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				leftPan1.setPreferredSize(new Dimension(400, 700));
 				leftPan1.setBackground(Color.white);
 				
-				JLabel lidReservataire=new JLabel("Nom réservataire");
+				JLabel lidReservataire=new JLabel("ID réservataire");
 				lidReservataire.setBounds(80, 72, 200, 30);
 				IdReservataire = new JTextField();
 				IdReservataire.setBounds(80, 100, 200, 30);
@@ -163,6 +165,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 						 String datec = tabReservation.getModel().getValueAt(ligne,2).toString();
 						 String heured = tabReservation.getModel().getValueAt(ligne,3).toString();
 						 String heuref = tabReservation.getModel().getValueAt(ligne,4).toString();
+						 String id_Res= tabReservation.getModel().getValueAt(ligne,5).toString();
 						
 						 
 						
@@ -174,6 +177,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 							jSpinner2.setValue(new SimpleDateFormat("HH:mm:ss").parse(heuref)); 
 							java.util.Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(datec);
 							datePanel.setDate(date2);
+							IdReservataire.setText(id_Res);
 							
 					
 						
@@ -243,12 +247,12 @@ public class OngletReservation extends JPanel implements ActionListener {
 	
 
 	public void Select() {
-		// requete SQL
+		//requete SQL
 		String userid="";
-		String sql = "select id_reservation,Nsalle, date, HeureD,HeureF from reservation ";
+		String sql = "select id_reservation,Nsalle, date, HeureD,HeureF,id_reservataire from reservation ";
 		String sql2 ="select id_reservation,N_salle, date, HeureD,HeureF from confirmation";
 		String sqlE="select N_salle,date, HeureD,HeureF from confirmation";
-		String sqlE2="select id_reservation,Nsalle, date, HeureD,HeureF from reservation where id_reservataire=\"F130028508\"";
+		String sqlE2="select id_reservation,Nsalle, date, HeureD,HeureF from reservation where id_reservataire='"+UserID+"'";
 		
 		String url = "jdbc:mysql://localhost:3306/projet_java";
 		
@@ -302,6 +306,8 @@ public class OngletReservation extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String url = "jdbc:mysql://localhost:3306/projet_java";
 		Date date = new Date(datePanel.getDate().getTime());
+		
+		// BUTTON AJOUTER
 		if(e.getSource()==AjoutBtn) {
 			
 			try {
@@ -309,16 +315,24 @@ public class OngletReservation extends JPanel implements ActionListener {
 				Connection connect = DriverManager.getConnection(url,"root","");
 				Statement s = connect.createStatement();
 				if(UserType=="Administrateur") {
-
-                String sql =" insert into confirmation (N_salle, date, HeureD,HeureF) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"')";
+					// session admin
+                String sql =" insert into confirmation (N_salle, date, HeureD,HeureF,id_reservataire,code_adm) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+IdReservataire.getText()+"','"+UserID+"')";
 				String sql2="delete from reservation where id_reservation ="+tabReservation.getModel().getValueAt(tabReservation.getSelectedRow(),0).toString();
-                JOptionPane.showMessageDialog(null,sql2);
 				s.executeUpdate(sql);
 				s.executeUpdate(sql2);
 				}else {
-					String sql =" insert into reservation (Nsalle, date, HeureD,HeureF) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"')";
-	                JOptionPane.showMessageDialog(null,sql);
-					s.executeUpdate(sql);
+					// session Reservataire
+					String sql ="insert into reservation (Nsalle, date, HeureD,HeureF,id_reservataire) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+UserID+"')";
+					String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (TIMEDIFF(HeureD,'"+de.getFormat().format(jSpinner1.getValue())+"')<=\"00:00:00\" or TIMEDIFF(HeureF,'"+de1.getFormat().format(jSpinner2.getValue())+"')>=\"00:00:00\")" ;
+					JOptionPane.showMessageDialog(null, sql);
+					ResultSet res =s.executeQuery(sql2);
+					
+
+					if(res.next()) {
+						JOptionPane.showMessageDialog(null, " la salle est deja réservé,veuillez changer le créneau choisi");
+					}
+					else
+					   s.executeUpdate(sql);
 				}
 				
 				s.close();
@@ -347,7 +361,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 					
 					// reservataire delete
 					String sql3="delete from reservation where id_reservation ="+tabReservation2.getModel().getValueAt(tabReservation2.getSelectedRow(),0).toString();
-					JOptionPane.showMessageDialog(null,sql3);
 					s2.executeUpdate(sql3);
 	               
 
@@ -381,14 +394,25 @@ public class OngletReservation extends JPanel implements ActionListener {
 					//reservataire update
 					
 				String sql4="update reservation set Nsalle='"+N_Salle.getText()+"',date='"+date+"',HeureD='"+de.getFormat().format(jSpinner1.getValue())+"',HeureF='"+de1.getFormat().format(jSpinner2.getValue())+"' where id_reservation ="+tabReservation2.getModel().getValueAt(tabReservation2.getSelectedRow(),0).toString(); 
-				s3.executeUpdate(sql4);
-				}
+				
+				String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (TIMEDIFF(HeureD,'"+de.getFormat().format(jSpinner1.getValue())+"')<=\"00:00:00\" or TIMEDIFF(HeureF,'"+de1.getFormat().format(jSpinner2.getValue())+"')>=\"00:00:00\")" ;
+				JOptionPane.showMessageDialog(null, sql4);
+//				ResultSet res =s3.executeQuery(sql2);
+//
+//				if(res.next()) {
+//				JOptionPane.showMessageDialog(null, " la modification est impossible,veuillez changer le créneau choisi");
+				//}
+			//	else
+				   s3.executeUpdate(sql4);
+			//}
+				
+				
 			
 				s3.close();
 				connect3.close();
 				Select();
 				
-			} catch (ClassNotFoundException e1) {
+			}} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SQLException e1) {

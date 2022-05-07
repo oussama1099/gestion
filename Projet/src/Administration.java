@@ -8,7 +8,7 @@ public class Administration {
 
 	
 	
-	public Administration(String nom_Asministrateur, String Cd_Administrateur) {
+	public Administration( String Cd_Administrateur) {
 		frame = new JFrame("Espace de Gestion");
 		frame.setSize(1000, 700);
 		
@@ -22,7 +22,7 @@ public class Administration {
 		
 		//onglet des réservations
 		
-		OngletReservation ReservationOnglet = new OngletReservation("Administrateur");
+		OngletReservation ReservationOnglet = new OngletReservation("Administrateur",Cd_Administrateur);
 		
 		onglets.addTab("Réservation des salles", ReservationOnglet.reservationOnglet);
 		//__________________________________________________________________________________________________

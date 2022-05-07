@@ -7,7 +7,7 @@ public class reservataire {
 	
 	JFrame frame;
 	
-	public reservataire(String UserType) {
+	public reservataire(String UserType,String UserID) {
 		
 		frame = new JFrame("Espace de Gestion");
 		frame.setSize(1000, 700);
@@ -19,7 +19,7 @@ public class reservataire {
 				
 		//onglet des réservations
 				
-				OngletReservation ReservationOnglet = new OngletReservation(UserType);
+				OngletReservation ReservationOnglet = new OngletReservation(UserType,UserID);
 				onglets.addTab("Réservation des salles", ReservationOnglet.reservationOnglet);
 		//_____________________________________________________________________________
 			
