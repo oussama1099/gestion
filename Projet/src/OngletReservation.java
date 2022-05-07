@@ -47,7 +47,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		
 		
 //		if(UserType=="Administrateur")
-		JLabel Text = new JLabel("RÃ©seravtion des salles");
+		JLabel Text = new JLabel("Réseravtion des salles");
 		Text.setFont(new Font("Segeo UI", Font.BOLD, 20));
 		Text.setForeground(new Color(57, 113, 177));
 		Text.setBounds(70, 25, 600, 30);
@@ -57,30 +57,30 @@ public class OngletReservation extends JPanel implements ActionListener {
 		reservationOnglet.setBackground(Color.white);
 		reservationOnglet.setLayout(null);
 		
-			//partie Ã  gauche (Ajout, suppression, modification des rÃ©seravation)
+			//partie à gauche (Ajout, suppression, modification des réseravation)
 		
 				JPanel leftPan1 = new JPanel();
 				leftPan1.setLayout(null);
 				leftPan1.setPreferredSize(new Dimension(400, 700));
 				leftPan1.setBackground(Color.white);
 				
-				JLabel lidReservataire=new JLabel("Nom rÃ©servataire");
+				JLabel lidReservataire=new JLabel("Nom réservataire");
 				lidReservataire.setBounds(80, 72, 200, 30);
 				IdReservataire = new JTextField();
 				IdReservataire.setBounds(80, 100, 200, 30);
 			
 				
-				JLabel NSalle=new JLabel("NumÃ©ro de salle");
+				JLabel NSalle=new JLabel("Numéro de salle");
 				NSalle.setBounds(80, 142, 200, 30);
 				N_Salle = new JTextField();
 				N_Salle.setBounds(80, 170, 200, 30);
 				
-				JLabel lDateReseravtion=new JLabel("Date de RÃ©servation");
+				JLabel lDateReseravtion=new JLabel("Date de Réservation");
 				lDateReseravtion.setBounds(80, 212, 200, 30);
 				datePanel = new JDateChooser();
 				datePanel.setBounds(80, 240, 200, 30);
 				
-				JLabel HeureD = new JLabel("Heure dÃ©but");
+				JLabel HeureD = new JLabel("Heure début");
 				HeureD.setBounds(80, 282, 200, 30);
 				Date date = new Date(0,0,0);
 				SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR);
@@ -111,10 +111,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 				UpdateBtn = new JButton("Modifier");
 				UpdateBtn.setBounds(256, 450, 100,30);
 				
-				
-	
-				
-				
 				AjoutBtn.setBackground(new Color(57, 113, 177));
 				AjoutBtn.setFont(new Font("Segeo UI", Font.PLAIN, 12));
 				AjoutBtn.setFocusable(false);
@@ -133,7 +129,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 				UpdateBtn.setForeground(Color.white);
 				UpdateBtn.addActionListener(this);
 				
-				
 				leftPan1.add(lidReservataire);
 				leftPan1.add(NSalle);
 				leftPan1.add(lDateReseravtion);
@@ -144,9 +139,9 @@ public class OngletReservation extends JPanel implements ActionListener {
 				leftPan1.add(AjoutBtn);
 				leftPan1.add(DeleteBtn);
 				leftPan1.add(UpdateBtn);
-
+	
 				
-			//partie Ã  droite (Affichage des tableaux)
+			//partie à droite (Affichage des tableaux)
 				JPanel rightPan1 = new JPanel();
 				JScrollPane tabscroll= new JScrollPane();
 				tabReservation = new JTable();
@@ -239,12 +234,17 @@ public class OngletReservation extends JPanel implements ActionListener {
 				reservationOnglet.add(rightPan1);
 				reservationOnglet.add(leftPan1);
 				Select();
+		
+		
+		
 	}
 
+	
+	
+
 	public void Select() {
-		// requete sql
-		
-		
+		// requete SQL
+		String userid="";
 		String sql = "select id_reservation,Nsalle, date, HeureD,HeureF from reservation ";
 		String sql2 ="select id_reservation,N_salle, date, HeureD,HeureF from confirmation";
 		String sqlE="select N_salle,date, HeureD,HeureF from confirmation";
@@ -252,7 +252,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		
 		String url = "jdbc:mysql://localhost:3306/projet_java";
 		
-		//selection des donnÃ©es session admin
+		//selection des données session admin
 		if(UserType=="Administrateur") {
 		
 		try {
@@ -272,7 +272,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// selection des donnÃ©es session reservataire
+		// selection des données session reservataire
 
 	}else {
 		try {
@@ -396,9 +396,13 @@ public class OngletReservation extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		
-
-	}}}
+			
+			
+		}
+		
+		
+	}
 	
 	
 
-
+}
