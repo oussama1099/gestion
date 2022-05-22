@@ -63,7 +63,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		JLabel lBienvune = new JLabel("Bienvenue, "+USERNAME);
 		lBienvune.setFont(new Font("Segeo UI", Font.BOLD, 18));
 		lBienvune.setForeground(Color.decode("#C6B89B"));
-		lBienvune.setBounds(55, 50, 300, 30);
+		lBienvune.setBounds(60, 30, 300, 30);
 		
 		JLabel Text = new JLabel("Réseravtion des salles");
 		Text.setFont(new Font("Segeo UI", Font.BOLD, 24));
@@ -183,7 +183,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 				
 				leftPan1.add(lBienvune);
 				JSeparator sp = new JSeparator(JSeparator.HORIZONTAL);
-				sp.setBounds(20, 92, 360, 30);
+				sp.setBounds(125, 68, 100, 30);
 				sp.setForeground(Color.decode("#C6B89B"));
 				leftPan1.add(sp);
 				leftPan1.add(lidReservataire);
@@ -289,7 +289,8 @@ public class OngletReservation extends JPanel implements ActionListener {
 							
 							try {
 								
-								IdReservataire.setText("");
+								if(UserType=="etudiant" || UserType=="professeur") IdReservataire.setText(UserID);
+								else IdReservataire.setText("");
 								N_Salle.setText(n_salle);
 								jSpinner1.setValue(new SimpleDateFormat("HH:mm:ss").parse(heureD));
 								jSpinner2.setValue(new SimpleDateFormat("HH:mm:ss").parse(heureF)); 
@@ -451,10 +452,12 @@ public class OngletReservation extends JPanel implements ActionListener {
 				
 				if(UserType=="Administrateur") {
 					// session admin
-                String sql =" insert into confirmation (N_salle, date, HeureD,HeureF,id_reservataire,code_adm) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+IdReservataire.getText()+"','"+UserID+"')";
-				String sql2="delete from reservation where id_reservation ="+tabReservation.getModel().getValueAt(tabReservation.getSelectedRow(),0).toString();
-				s.executeUpdate(sql);
-				s.executeUpdate(sql2);
+                int ligne = tabReservation.getSelectedRow();
+				String sql =" insert into confirmation (N_salle, date, HeureD,HeureF,id_reservataire,code_adm) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+IdReservataire.getText()+"','"+UserID+"')";
+				if(tabReservation.getSelectedRow()==ligne) {
+					String sql2="delete from reservation where id_reservation ="+tabReservation.getModel().getValueAt(tabReservation.getSelectedRow(),0).toString();
+					s.executeUpdate(sql2);
+				}
 				s.executeUpdate(sql);
 				IdReservataire.setText("");
 				N_Salle.setText("");
@@ -464,7 +467,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 					
 					String sql ="insert into reservation (Nsalle, date, HeureD,HeureF,id_reservataire) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+UserID+"')";
 					String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (('"+heured+"' > HeureD and '"+heured+"' < HeureF or '"+heuref+"' > HeureD and '"+heuref+"' < HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' = HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' > HeureF) or ('"+heured+"' < HeureD and '"+heuref+"' = HeureF)) " ;
-					JOptionPane.showMessageDialog(null, sql);
+					
 					ResultSet res =s.executeQuery(sql2);
 					
 
@@ -549,7 +552,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 				String sql4="update reservation set Nsalle='"+N_Salle.getText()+"',date='"+date+"',HeureD='"+de.getFormat().format(jSpinner1.getValue())+"',HeureF='"+de1.getFormat().format(jSpinner2.getValue())+"' where id_reservation ="+tabReservation2.getModel().getValueAt(tabReservation2.getSelectedRow(),0).toString(); 
 				
 				String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (('"+heured+"' > HeureD and '"+heured+"' < HeureF or '"+heuref+"' > HeureD and '"+heuref+"' < HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' = HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' > HeureF) or ('"+heured+"' < HeureD and '"+heuref+"' = HeureF)) " ;
-				JOptionPane.showMessageDialog(null, sql4);
 				ResultSet res =s3.executeQuery(sql2);
 
 				if(res.next()) {
