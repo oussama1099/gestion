@@ -371,6 +371,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 				rightPan1.add(BareRech,BorderLayout.CENTER);  //*
 				rightPan1.add(BtnRech,BorderLayout.CENTER); //*
+				rightPan1.add(BtnAnnulRech,BorderLayout.CENTER); //*
 				
 				
 				tabscroll2.setViewportView(tabEvent2);
