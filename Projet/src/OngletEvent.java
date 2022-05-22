@@ -88,7 +88,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		JLabel lBienvune = new JLabel("Bienvenue, "+USERNAME);
 		lBienvune.setFont(new Font("Segeo UI", Font.BOLD, 18));
 		lBienvune.setForeground(Color.decode("#C6B89B"));
-		lBienvune.setBounds(55, 50, 300, 30);
+		lBienvune.setBounds(60, 30, 300, 30);
 		
 		JLabel Text = new JLabel("Planning des Evènements");
 		Text.setFont(new Font("Segeo UI", Font.BOLD, 24));
@@ -215,7 +215,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 				leftPan1.add(lBienvune);
 				JSeparator sp = new JSeparator(JSeparator.HORIZONTAL);
-				sp.setBounds(20, 92, 360, 30);
+				sp.setBounds(125, 68, 100, 30);
 				sp.setForeground(Color.decode("#C6B89B"));
 				leftPan1.add(sp);
 				leftPan1.add(lidReservataire);
@@ -444,10 +444,10 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		
 		
 		//selection des données session admin
-			lTAB1.setBounds(120, 50, 500, 30);
+			lTAB1.setBounds(200, 50, 500, 30);
 			lTAB1.setText("Les évènements");
 			lTAB2.setText("Les réservations");
-			lTAB2.setBounds(150, 315, 300, 30);
+			lTAB2.setBounds(200, 315, 300, 30);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connect = DriverManager.getConnection(url,"root","");
