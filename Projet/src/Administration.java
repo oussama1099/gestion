@@ -20,20 +20,15 @@ public class Administration {
 		
 		//_________________________________________________________________________________________________
 		
-		//onglet des réservations
+		//onglet des reservations
 		
 		OngletReservation ReservationOnglet = new OngletReservation("Administrateur",Cd_Administrateur);
-		
-		onglets.addTab("Réservation des salles", ReservationOnglet.reservationOnglet);
+		onglets.addTab("RÃ©servation des salles", ReservationOnglet.reservationOnglet);
 		//__________________________________________________________________________________________________
 		
-		//onglet des événements
-		JPanel eventOnglet = new JPanel();
-		JLabel titreOnglet2 = new JLabel("Événements");
-		eventOnglet.add(titreOnglet2);
-		eventOnglet.setPreferredSize(new Dimension(1000, 700));
-		eventOnglet.setBackground(Color.white);
-		onglets.addTab("Événements", eventOnglet);
+		//onglet des  evenements
+		OngletEvent EventOnglet = new OngletEvent("Administrateur",Cd_Administrateur);
+		onglets.addTab("EvÃ¨nements", EventOnglet.eventOnglet);
 		
 		
 		
