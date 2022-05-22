@@ -243,8 +243,8 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				lTAB2.setForeground(Color.white);
 				
 				/////////////////////////////////////////////////////////////*****************
-				Rech = new String();
-				BareRech = new JTextField("Rechercher une salle");
+				Rech = new String("");
+				BareRech = new JTextField("Rechercher per Id de réservation");
 				BareRech.addFocusListener(new FocusListener() {
 					public void focusGained(FocusEvent e) {
 						BareRech.setText(Rech);
@@ -252,7 +252,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 
 					public void focusLost(FocusEvent e) {
 						Rech = BareRech.getText();
-						if(Rech.isEmpty()) BareRech.setText("Rechercher une salle");
+						if(Rech.isEmpty()) BareRech.setText("Recherche par N°Réservation");
 						else BareRech.setText(Rech);
 					}
 				});
@@ -274,7 +274,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				BtnAnnulRech.setFocusable(false); 								
 				BtnAnnulRech.setForeground(new Color(57, 113, 177));			
 				BtnRech.addActionListener(this);								
-				BtnAnnulRech.addActionListener(this);						
+				BtnAnnulRech.addActionListener(this);					
 				
 				
 				////////////////////////////////////////////////////////////////////*************
@@ -393,7 +393,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 	
 	private void Recherch() {
 		String url = "jdbc:mysql://localhost:3306/projet_java";
-		String sql = "select id_reservation,N_salle,date, HeureD,HeureF from confirmation where N_salle = '"+BareRech.getText()+"'";
+		String sql = "select id_reservation,N_salle,date, HeureD,HeureF from confirmation where id_reservation = "+BareRech.getText();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connect = DriverManager.getConnection(url,"root","");
@@ -489,8 +489,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		}
 		
 		if(e.getSource()==BtnAnnulRech) {
-			Rech = "Rechercher une salle";
-			BareRech.setText(Rech);
 			Select();
 		}
 		//////////////////////////////////*****************************
