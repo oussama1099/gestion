@@ -31,10 +31,8 @@ public class OngletReservation extends JPanel implements ActionListener {
 	JTextField IdReservataire;
 	JTextField N_Salle;
 	JTextField N_Heure;
-	
 	JSpinner.DateEditor de;
 	JSpinner.DateEditor de1;
-	
 	JSpinner jSpinner1;
 	JSpinner jSpinner2;
 	JDateChooser datePanel;
@@ -48,7 +46,6 @@ public class OngletReservation extends JPanel implements ActionListener {
 	String UserType;
 	String UserID;
 	String USERNAME;
-	
 	JLabel lTAB1;
 	JLabel lTAB2;
 
@@ -63,7 +60,7 @@ public class OngletReservation extends JPanel implements ActionListener {
 		tabReservation = new JTable();
 		tabReservation2 = new JTable();
 		Select();
-		JLabel lBienvune = new JLabel("Bienvenu, "+USERNAME);
+		JLabel lBienvune = new JLabel("Bienvenue, "+USERNAME);
 		lBienvune.setFont(new Font("Segeo UI", Font.BOLD, 18));
 		lBienvune.setForeground(Color.decode("#C6B89B"));
 		lBienvune.setBounds(55, 50, 300, 30);
@@ -578,12 +575,8 @@ public class OngletReservation extends JPanel implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		
-			
 			
 		}
-		
-		
 		
 	}
 	
