@@ -90,7 +90,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		lBienvune.setForeground(Color.decode("#C6B89B"));
 		lBienvune.setBounds(55, 50, 300, 30);
 		
-		JLabel Text = new JLabel("Planing des Evènements");
+		JLabel Text = new JLabel("Planning des Evènements");
 		Text.setFont(new Font("Segeo UI", Font.BOLD, 24));
 		Text.setForeground(new Color(57, 113, 177));
 		Text.setBounds(55, 105, 600, 30);
@@ -244,7 +244,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 				/////////////////////////////////////////////////////////////*****************
 				Rech = new String("");
-				BareRech = new JTextField("Rechercher per Id de réservation");
+				BareRech = new JTextField("Recherche par N°Réservation");
 				BareRech.addFocusListener(new FocusListener() {
 					public void focusGained(FocusEvent e) {
 						BareRech.setText(Rech);
