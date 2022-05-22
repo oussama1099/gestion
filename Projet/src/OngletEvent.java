@@ -430,7 +430,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		}
 		//requete SQL
 		
-		String sql = "select IdEvent,titre, Description from event ";
+		String sql = "select IdEvent,idReservation,titre, Description from event where idReservation=any(select id_reservation from confirmation where date>=DATE(NOW()))";
 		String sql2 ="select id_reservation,N_salle, date, HeureD,HeureF from confirmation";
 		String sqlE="select id_reservation,N_salle,date, HeureD,HeureF from confirmation";
 		String sqlE2="select id_reservation,Nsalle, date, HeureD,HeureF from reservation where id_reservataire='"+UserID+"'";
@@ -458,8 +458,9 @@ public class OngletEvent  extends JPanel implements ActionListener{
 			tabEvent2.setModel(DbUtils.resultSetToTableModel(resultat2));
          
 			tabEvent2.getColumnModel().getColumn(0).setHeaderValue("Id évènement");
-			tabEvent2.getColumnModel().getColumn(1).setHeaderValue("Titre");
-			tabEvent2.getColumnModel().getColumn(2).setHeaderValue("Description");
+			tabEvent2.getColumnModel().getColumn(1).setHeaderValue("N°Réservation");
+			tabEvent2.getColumnModel().getColumn(2).setHeaderValue("Titre");
+			tabEvent2.getColumnModel().getColumn(3).setHeaderValue("Description");
 			s.close();
 			s.close();
 			connect.close();
