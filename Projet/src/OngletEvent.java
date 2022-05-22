@@ -64,7 +64,10 @@ public class OngletEvent  extends JPanel implements ActionListener{
 	JLabel lTAB2;
 	String idReservation;
 	
-	JTextField BareRech; //*
+	JTextField BareRech;
+	JButton BtnRech; //**
+	JButton BtnAnnulRech; //**
+	String Rech; //***
 
 	public OngletEvent(String UserType,String UserID) {
 		
@@ -234,17 +237,42 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				lTAB2.setFont(new Font("Segeo UI", Font.BOLD, 24));
 				lTAB2.setForeground(Color.white);
 				
-				BareRech = new JTextField(); 								//*
-				BareRech.setBounds(55, 565, 200, 30); 						//*
-				JButton BtnRech = new JButton();							//*
-				BtnRech.setIcon(new ImageIcon("rsrc\\icons-chercher.png")); //*
+				/////////////////////////////////////////////////////////////*****************
+				Rech = new String();
+				BareRech = new JTextField("Rechercher une salle");
+				BareRech.addFocusListener(new FocusListener() {
+					public void focusGained(FocusEvent e) {
+						BareRech.setText(Rech);
+					}
+
+					public void focusLost(FocusEvent e) {
+						Rech = BareRech.getText();
+						if(Rech.isEmpty()) BareRech.setText("Rechercher une salle");
+						else BareRech.setText(Rech);
+					}
+				});
+				BareRech.setBounds(25, 565, 200, 30);						
+				BtnRech = new JButton();							
+				BtnRech.setIcon(new ImageIcon("rsrc\\icons-chercher.png")); 
+				BtnRech.setText("Rechercher");								
+				BtnRech.setBounds(235, 565, 150, 30); 						
+				BtnRech.setBackground(Color.white); 						
+				BtnRech.setFont(new Font("Segeo UI", Font.PLAIN, 12)); 		
+				BtnRech.setFocusable(false); 								
+				BtnRech.setForeground(new Color(57, 113, 177));				
+				BtnAnnulRech = new JButton();							
+				BtnAnnulRech.setIcon(new ImageIcon("rsrc\\icons-effacer-la-recherche.png")); 
+				BtnAnnulRech.setText("Annuler la Recherche");
+				BtnAnnulRech.setBounds(395, 565, 180, 30);						
+				BtnAnnulRech.setBackground(Color.white); 						
+				BtnAnnulRech.setFont(new Font("Segeo UI", Font.PLAIN, 12)); 		
+				BtnAnnulRech.setFocusable(false); 								
+				BtnAnnulRech.setForeground(new Color(57, 113, 177));			
+				BtnRech.addActionListener(this);								
+				BtnAnnulRech.addActionListener(this);						
 				
-				BtnRech.setText("Rechercher");
-				BtnRech.setBounds(260, 565, 150, 30); 						//*
-				BtnRech.setBackground(Color.white); 						//*
-				BtnRech.setFont(new Font("Segeo UI", Font.PLAIN, 12)); 		//*
-				BtnRech.setFocusable(false); 								//*
-				BtnRech.setForeground(new Color(57, 113, 177));							//*
+				
+				////////////////////////////////////////////////////////////////////*************
 				
 				
 				JPanel rightPan1 = new JPanel();
@@ -355,7 +383,32 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 	}
 
+	///////////////////////////////////////////////////////////////////*******************
 	
+	private void Recherch() {
+		String url = "jdbc:mysql://localhost:3306/projet_java";
+		String sql = "select id_reservation,N_salle,date, HeureD,HeureF from confirmation where N_salle = '"+BareRech.getText()+"'";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connect = DriverManager.getConnection(url,"root","");
+			Statement s = connect.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			tabEvent.setModel(DbUtils.resultSetToTableModel(rs));
+			tabEvent.getColumnModel().getColumn(0).setHeaderValue("N° Réservation");
+			tabEvent.getColumnModel().getColumn(1).setHeaderValue("Salle");
+			tabEvent.getColumnModel().getColumn(2).setHeaderValue("Date Réservation");
+			tabEvent.getColumnModel().getColumn(3).setHeaderValue("De");
+			tabEvent.getColumnModel().getColumn(4).setHeaderValue("Jusqu'à");
+			s.close();
+			connect.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////************************
 	
 	
 	public void Select() {
@@ -421,6 +474,19 @@ public class OngletEvent  extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String url = "jdbc:mysql://localhost:3306/projet_java";
+		
+		
+		//////////////////////////////////*****************************
+		if(e.getSource()==BtnRech) {
+			Recherch();
+		}
+		
+		if(e.getSource()==BtnAnnulRech) {
+			Rech = "Rechercher une salle";
+			BareRech.setText(Rech);
+			Select();
+		}
+		//////////////////////////////////*****************************
 		
 		// BUTTON AJOUTER
 		if(e.getSource()==AjoutBtn) {
