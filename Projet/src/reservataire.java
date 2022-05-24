@@ -17,10 +17,16 @@ public class reservataire {
 				onglets.setBackground(Color.white);
 				onglets.setFocusable(false);
 				
-		//onglet des r�servations
+		//onglet des réservations
 				
 				OngletReservation ReservationOnglet = new OngletReservation(UserType,UserID);
-				onglets.addTab("R�servation des salles", ReservationOnglet.reservationOnglet);
+				onglets.addTab("Réservation des salles", ReservationOnglet.reservationOnglet);
+				
+				
+		//onglet des évènements
+				OngletEventRes EventOnglet = new OngletEventRes();
+				onglets.addTab("Evènements", EventOnglet.eventOnglet);
+				
 		//_____________________________________________________________________________
 			
 		
