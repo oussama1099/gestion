@@ -452,9 +452,11 @@ public class OngletReservation extends JPanel implements ActionListener {
 				
 				if(UserType=="Administrateur") {
 					// session admin
+                
                 int ligne = tabReservation.getSelectedRow();
+                JOptionPane.showMessageDialog(null, ligne);
 				String sql =" insert into confirmation (N_salle, date, HeureD,HeureF,id_reservataire,code_adm) values ('" +N_Salle.getText()+"','"+date+"','"+de.getFormat().format(jSpinner1.getValue())+"','"+de1.getFormat().format(jSpinner2.getValue())+"','"+IdReservataire.getText()+"','"+UserID+"')";
-				if(tabReservation.getSelectedRow()==ligne) {
+				if(ligne!=-1) {
 					String sql2="delete from reservation where id_reservation ="+tabReservation.getModel().getValueAt(tabReservation.getSelectedRow(),0).toString();
 					s.executeUpdate(sql2);
 				}
