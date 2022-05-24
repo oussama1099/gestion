@@ -58,7 +58,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 	JPanel eventOnglet;
 	JButton AjoutBtn;
 	JButton DeleteBtn;
-	JButton UpdateBtn;
 	JTable tabEvent;
 	JTable tabEvent2;
 	JDateChooser datePanel2;
@@ -68,7 +67,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 	JLabel lTAB1;
 	JLabel lTAB2;
 	String idReservation;
-	
 	JTextField BareRech;
 	JButton BtnRech; //**
 	JButton BtnAnnulRech; //**
@@ -128,36 +126,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				NSalle.setBounds(60, 312, 200, 30);
 				N_Salle = new JTextField();
 				N_Salle.setBounds(60, 340, 250, 30);
-//				N_Salle.addKeyListener(new KeyAdapter() {    //*********A Ameliorer***********************
-//					
-//					public void keyReleased(KeyEvent arg0) {
-//						String url = "jdbc:mysql://localhost:3306/projet_java";
-//						
-//						try {
-//							
-//							Class.forName("com.mysql.jdbc.Driver");
-//							Connection connexion = DriverManager.getConnection(url,"root","");
-//							String sql = "select N_salle, date, HeureD,HeureF from confirmation where N_salle =  '"+N_Salle.getText().toString()+"'";
-//							Statement stat = connexion.createStatement();
-//							ResultSet rs = stat.executeQuery(sql);
-//							if(rs.next())
-//								tabEvent.setModel(DbUtils.resultSetToTableModel(rs));
-//							stat.close();
-//							connexion.close();
-//							
-//						} catch (SQLException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (ClassNotFoundException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						
-//					}
-//					
-//					
-//				}
-//				);
 				
 				JLabel lDateReseravtion=new JLabel("Date de Réservation");
 				lDateReseravtion.setBounds(60, 382, 200, 30);
@@ -189,11 +157,9 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 				
 				AjoutBtn  = new JButton("Ajouter");
-				AjoutBtn.setBounds(38, 530, 100, 30);
+				AjoutBtn.setBounds(60, 530, 120, 30);
 				DeleteBtn = new JButton("Supprimer");
-				DeleteBtn.setBounds(148, 530, 100,30);
-				UpdateBtn = new JButton("Modifier");
-				UpdateBtn.setBounds(256, 530, 100,30);
+				DeleteBtn.setBounds(190, 530, 120,30);
 				
 				AjoutBtn.setBackground(new Color(57, 113, 177));
 				AjoutBtn.setFont(new Font("Segeo UI", Font.PLAIN, 12));
@@ -207,11 +173,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				DeleteBtn.setForeground(Color.white);
 				DeleteBtn.addActionListener(this);
 				
-				UpdateBtn.setBackground(new Color(57, 113, 177));
-				UpdateBtn.setFont(new Font("Segeo UI", Font.PLAIN, 12));
-				UpdateBtn.setFocusable(false);
-				UpdateBtn.setForeground(Color.white);
-				UpdateBtn.addActionListener(this);
 				
 				leftPan1.add(lBienvune);
 				JSeparator sp = new JSeparator(JSeparator.HORIZONTAL);
@@ -227,7 +188,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				leftPan1.add(Text);
 				leftPan1.add(AjoutBtn);
 				leftPan1.add(DeleteBtn);
-				leftPan1.add(UpdateBtn);
 				leftPan1.add(lDiscEvent);
 				leftPan1.add(DiscEvent);
 	
@@ -282,8 +242,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 				
 				JPanel rightPan1 = new JPanel();
 				JScrollPane tabscroll= new JScrollPane();
-				
-				
 				tabscroll.setBounds(25, 355, 550, 200);
 				rightPan1.add(lTAB1,BorderLayout.CENTER);
 				rightPan1.add(tabscroll,BorderLayout.CENTER);
@@ -437,11 +395,7 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		//requete SQL
 		
 		String sql = "select IdEvent,idReservation,titre, Description from event where idReservation=any(select id_reservation from confirmation where date>=DATE(NOW()))";
-		String sql2 ="select id_reservation,N_salle, date, HeureD,HeureF from confirmation";
 		String sqlE="select id_reservation,N_salle,date, HeureD,HeureF from confirmation";
-		String sqlE2="select id_reservation,Nsalle, date, HeureD,HeureF from reservation where id_reservataire='"+UserID+"'";
-		
-		
 		
 		//selection des données session admin
 			lTAB1.setBounds(200, 50, 500, 30);
@@ -495,13 +449,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 		
 		// BUTTON AJOUTER
 		if(e.getSource()==AjoutBtn) {
-			
-			Date date = new Date(datePanel.getDate().getTime());
-			String heured = de.getFormat().format(jSpinner1.getValue());
-			String heuref = de1.getFormat().format(jSpinner2.getValue());
-			LocalTime h1 = LocalTime.parse(heured);
-			LocalTime h2 = LocalTime.parse(heuref);
-			
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection connect = DriverManager.getConnection(url,"root","");
@@ -556,55 +503,6 @@ public class OngletEvent  extends JPanel implements ActionListener{
 			}
 
 		}
-//		if(e.getSource()==UpdateBtn) {
-//			
-//			try {
-//				Class.forName("com.mysql.jdbc.Driver");
-//				Connection connect3 = DriverManager.getConnection(url,"root","");
-//				Statement s3 = connect3.createStatement();
-//				if(UserType=="Administrateur") {
-//					
-//					// admin session update
-//
-//				//String sql4="update confirmation set N_salle='"+N_Salle.getText()+"',date='"+date+"',HeureD='"+de.getFormat().format(jSpinner1.getValue())+"',HeureF='"+de1.getFormat().format(jSpinner2.getValue())+"' where id_reservation ="+tabEvent2.getModel().getValueAt(tabEvent2.getSelectedRow(),0).toString(); 
-//				//s3.executeUpdate(sql4);
-//					titleEvent.setText("");
-//				N_Salle.setText("");
-//				datePanel.setDate(null);
-//				}else {
-//					//reservataire update
-//					
-//				//String sql4="update reservation set Nsalle='"+N_Salle.getText()+"',date='"+date+"',HeureD='"+de.getFormat().format(jSpinner1.getValue())+"',HeureF='"+de1.getFormat().format(jSpinner2.getValue())+"' where id_reservation ="+tabEvent2.getModel().getValueAt(tabEvent2.getSelectedRow(),0).toString(); 
-//				
-//				String sql2="select * from confirmation where N_salle='"+N_Salle.getText()+"' and date='"+date+"' and (('"+heured+"' > HeureD and '"+heured+"' < HeureF or '"+heuref+"' > HeureD and '"+heuref+"' < HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' = HeureF) or ('"+heured+"' = HeureD and '"+heuref+"' > HeureF) or ('"+heured+"' < HeureD and '"+heuref+"' = HeureF)) " ;
-//				//JOptionPane.showMessageDialog(null, sql4);
-//				//ResultSet res =s3.executeQuery(sql2);
-//
-////				if(res.next()) {
-////				JOptionPane.showMessageDialog(null, " la modification est impossible,veuillez changer le créneau choisi");
-////				}
-////				else
-////				   s3.executeUpdate(sql4);
-//				N_Salle.setText("");
-//				datePanel.setDate(null);
-//				
-//			}
-//				
-//				
-//			
-//				s3.close();
-//				connect3.close();
-//				Select();
-//				
-//			} catch (ClassNotFoundException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			} catch (SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//			
-//		}
 		
 	}
 	
